@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .forms import *
 from django.contrib import messages
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 from django_password_history.models import UserPasswordHistory
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site  
@@ -80,10 +80,11 @@ def ChangePassword(request):
         checking_password = user.check_password(current_password)
         print(checking_password)
         if checking_password:
-            get_user = UserPasswordHistory.objects.get(user=user)
+            get_user = UserPasswordHistory.objects.get(user=user).password_is_used
             print(get_user)
-            result=get_user.password_is_used(new_password)
-            if result==True:
+            
+            
+            if get_user:
                 messages.info(request,'The password has already used before')
             else:
                 user.set_password(new_password)
@@ -117,3 +118,9 @@ def activate(request, uidb64, token):
         return redirect('login')
     else:  
         return HttpResponse('Activation link is invalid!')  
+
+def Logout(request):
+    logout(request) 
+    return redirect('login')
+
+    

@@ -1,5 +1,7 @@
 
 <!DOCTYPE html>
+{% load crispy_forms_tags %}         
+
 
 <html lang="en">
 <head>
@@ -11,24 +13,17 @@
 <body>
     <form method="POST" action="">
         {% csrf_token%}
+        {{form|crispy }}<span id="password_strength"></span><br><br>
         
         
-       <label for="first_name">First Name</label>
-        {{form.first_name}}<br><br>
-        <label for="last_name">last Name</label>
-        {{form.last_name}}<br><br>
-        <label for="username">Username</label>
-        {{form.username}}<br><br>
-        <label for="email">Email</label>
-        {{form.email}}<br><br>
-        <label for="password1">Password</label>
-        {{form.password1}}
-        <span id="password_strength"></span><br><br>
-        <label for="password2">Confirm Password</label>
-        {{form.password2}}<br><br>
         <input type="submit" value="Register">
         {{form.errors}}
         <p>Already have account?<a href="{%url 'login' %}">Login</a></p>
+        
+        
+       
+        
+        
     </form>
 
     
@@ -72,20 +67,20 @@
         switch (passed) {
             case 0:
             case 1:
-                strength = "Weak";
+                strength = "Your password is Weak";
                 color = "red";
                 break;
             case 2:
-                strength = "Good";
+                strength = "Your password isGood";
                 color = "darkorange";
                 break;
             case 3:
             case 4:
-                strength = "Strong";
+                strength = "Your password is Strong";
                 color = "green";
                 break;
             case 5:
-                strength = "Very Strong";
+                strength = "Your password is Very Strong";
                 color = "darkgreen";
                 break;
         }

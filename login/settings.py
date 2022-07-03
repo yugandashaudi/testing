@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'captcha',
     'django_password_history',
 ]
-CRISPY_TEMPLATE_PACK = 'uni_form'
+
 PREVIOUS_PASSWORD_COUNT = 3
 
 
