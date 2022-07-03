@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" action="">
+        {% csrf_token%}
+        
+        
+       <label for="first_name">First Name</label>
+        {{form.first_name}}<br><br>
+        <label for="last_name">last Name</label>
+        {{form.last_name}}<br><br>
+        <label for="username">Username</label>
+        {{form.username}}<br><br>
+        <label for="email">Email</label>
+        {{form.email}}<br><br>
+        <label for="password1">Password</label>
+        {{form.password1}}
+        <span id="password_strength"></span><br><br>
+        <label for="password2">Confirm Password</label>
+        {{form.password2}}<br><br>
+        <input type="submit" value="Register">
+        {{form.errors}}
+        <p>Already have account?<a href="{%url 'login' %}">Login</a></p>
+    </form>
+
+    
+
+<script type="text/javascript">
+    document.getElementById("id_password1").onkeyup = function() {CheckPasswordStrength(this.value)};
+    console.log(document.getElementById("password"))
+    function CheckPasswordStrength(password) {
+        var password_strength = document.getElementById("password_strength");
+ 
+        //TextBox left blank.
+        if (password.length == 0) {
+            password_strength.innerHTML = "";
+            return;
+        }
+ 
+        //Regular Expressions.
+        var regex = new Array();
+        regex.push("[A-Z]"); //Uppercase Alphabet.
+        regex.push("[a-z]"); //Lowercase Alphabet.
+        regex.push("[0-9]"); //Digit.
+        regex.push("[$@$!%*#?&]"); //Special Character.
+ 
+        var passed = 0;
+ 
+        //Validate for each Regular Expression.
+        for (var i = 0; i < regex.length; i++) {
+            if (new RegExp(regex[i]).test(password)) {
+                passed++;
+            }
+        }
+ 
+        //Validate for length of Password.
+        if (passed > 2 && password.length > 8) {
+            passed++;
+        }
+ 
+        //Display status.
+        var color = "";
+        var strength = "";
+        switch (passed) {
+            case 0:
+            case 1:
+                strength = "Weak";
+                color = "red";
+                break;
+            case 2:
+                strength = "Good";
+                color = "darkorange";
+                break;
+            case 3:
+            case 4:
+                strength = "Strong";
+                color = "green";
+                break;
+            case 5:
+                strength = "Very Strong";
+                color = "darkgreen";
+                break;
+        }
+        password_strength.innerHTML = strength;
+        password_strength.style.color = color;
+    }
+</script>
+</body>
+</html>
