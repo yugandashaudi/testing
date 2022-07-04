@@ -6,9 +6,10 @@ from captcha.fields import CaptchaField
 
 class CreateUserForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text='Required')  
+    captcha=CaptchaField()
     class Meta:
         model=User
-        fields=['first_name','last_name','username','email','password1','password2']
+        fields=['first_name','last_name','username','email','password1','password2','captcha']
     def clean_email(self):
         email = self.cleaned_data['email']
         if User.objects.filter(email=email).exists():
@@ -18,7 +19,7 @@ class CreateUserForm(UserCreationForm):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
     password =forms.CharField(max_length=20, widget=forms.PasswordInput)
-    captcha=CaptchaField()
+    
 
     class Meta():
-        fields=['username','password','captcha']
+        fields=['username','password']
