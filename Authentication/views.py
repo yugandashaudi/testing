@@ -12,6 +12,8 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string  
 from django.http import HttpResponse  
 from datetime import date, timedelta
+import datetime
+import time
 
 def RegisterView(request):
     form = CreateUserForm()
@@ -55,13 +57,25 @@ def LoginUser(request):
             user = authenticate(username=username,password=password)
             if user is not None:
                 if user.is_active:
-                    if date.today() - user.password_date > timedelta(days=30):
-                        return redirect('change_password')
-
-                    else:
-        
+                    time=UserPasswordHistory.objects.get(user=user).updated_at
+                    print(time)
+                    print(datetime.datetime.now())
+                    if date.today() - time.date() < timedelta(days=30):
+ 
+                        messages.info(request,'You have been using the same password for 30days,your password has been expired,please change your password')
                         login(request,user)
+
+
+                        return redirect('change_password')
+                    else:
+                        login(request,user)
+        
+                
+        
+                       
                         return redirect('home')
+                else:
+                    pass
             else:
                 messages.info(request,'Username or Password is incorrect')
         

@@ -46,7 +46,9 @@ INSTALLED_APPS = [
 PREVIOUS_PASSWORD_COUNT = 3
 
 
+
 MIDDLEWARE = [
+   
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,7 +56,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    
+    
 ]
+
 
 ROOT_URLCONF = 'login.urls'
 
@@ -141,3 +147,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'iamyugdashaudi@gmail.com'
 EMAIL_HOST_PASSWORD = 'occesmqxolfkfjgi'
+
+
