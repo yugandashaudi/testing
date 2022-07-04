@@ -11,6 +11,7 @@ from django.utils.encoding import force_bytes,force_str
 from django.core.mail import EmailMessage  
 from django.template.loader import render_to_string  
 from django.http import HttpResponse  
+from datetime import date, timedelta
 
 def RegisterView(request):
     form = CreateUserForm()
@@ -53,8 +54,14 @@ def LoginUser(request):
             password = form.cleaned_data.get('password')
             user = authenticate(username=username,password=password)
             if user is not None:
-                login(request,user)
-                return redirect('home')
+                if user.is_active:
+                    if date.today() - user.password_date > timedelta(days=30):
+                        return redirect('change_password')
+
+                    else:
+        
+                        login(request,user)
+                        return redirect('home')
             else:
                 messages.info(request,'Username or Password is incorrect')
         
